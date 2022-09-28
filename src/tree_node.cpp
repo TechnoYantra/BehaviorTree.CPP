@@ -33,6 +33,7 @@ TreeNode::TreeNode(std::string name, NodeConfiguration config)
 NodeStatus TreeNode::executeTick()
 {
     NodeStatus new_status = status_;
+
     // a pre-condition may return the new status.
     // In this case it override the actual tick()
     if( pre_condition_callback_ )

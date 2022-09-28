@@ -28,6 +28,8 @@ class StdCoutLogger : public StatusChangeLogger
                           NodeStatus status) override;
 
     virtual void flush() override;
+
+    std::vector<Blackboard::Ptr> blackboard_stack;
 };
 
 }   // end namespace

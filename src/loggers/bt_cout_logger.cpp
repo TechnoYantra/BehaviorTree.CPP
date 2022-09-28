@@ -7,6 +7,8 @@ std::atomic<bool> StdCoutLogger::ref_count(false);
 StdCoutLogger::StdCoutLogger(const BT::Tree& tree) : StatusChangeLogger(tree.rootNode())
 {
     bool expected = false;
+    this->blackboard_stack = tree.blackboard_stack;
+
     if (!ref_count.compare_exchange_strong(expected, true))
     {
         throw LogicError("Only one instance of StdCoutLogger shall be created");
@@ -32,6 +34,22 @@ void StdCoutLogger::callback(Duration timestamp, const TreeNode& node, NodeStatu
            toStr(prev_status, true).c_str(),
            toStr(status, true).c_str() );
     std::cout << std::endl;
+
+    printf("[%.3f] BlackBoard \n",since_epoch);
+
+    if(blackboard_stack.size()!=0)
+    {
+
+    auto keys = blackboard_stack[0]->getKeys();
+
+    for(int i =0; i < keys.size(); i++)
+    {   std::string key = std::string{keys[i]};
+
+        std::string value = blackboard_stack[0]->getAny(key)->cast<std::string>();
+        std::string ws = "                        ";   
+        std::cout<<"    "<<key<<&ws[ key.size()  ]<<":  "<<value<<"\n";
+    }
+    }
 }
 
 void StdCoutLogger::flush()

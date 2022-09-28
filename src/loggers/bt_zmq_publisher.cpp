@@ -119,6 +119,10 @@ void PublisherZMQ::callback(Duration timestamp, const TreeNode& node, NodeStatus
 {
     using namespace std::chrono;
 
+    // NodeConfiguration d = node.config();
+    // Blackboard::Ptr black_brd = d.blackboard;
+    // black_brd->getKeys();
+
     SerializedTransition transition =
         SerializeTransition(node.UID(), timestamp, prev_status, status);
     {

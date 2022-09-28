@@ -38,7 +38,12 @@ static const char* xml_text = R"(
     <!--------------------------------------->
     <BehaviorTree ID="MainTree">
         <Sequence>
-            <SetBlackboard output_key="i" value="78"/>
+            <SetBlackboard output_key="battery_status" value="1"/>
+            <SetBlackboard output_key="check_valve" value="34"/>
+            <SetBlackboard output_key="thermal_check" value="There"/>
+            <SetBlackboard output_key="lock" value="true"/>
+            <SetBlackboard output_key="safe" value="4.56"/>
+            <SetBlackboard output_key="flag" value="45"/>
             <Fallback name="root_Fallback">
                 <Sequence name="door_open_sequence">
                     <IsDoorOpen/>
@@ -97,11 +102,20 @@ int main(int argc, char** argv)
         {   
             status = tree.tickRoot();
 
-            std::string key = "i";
+            // std::string key = "i";
+            // Any* i = tree.blackboard_stack[0]->getAny(key);
             
-            Any* i = tree.blackboard_stack[0]->getAny(key);
-            std::string output = i->cast<std::string>();
-            std::cout<<output;
+            // std::cout<<"BlackBoard\n";
+            // auto keys = tree.blackboard_stack[0]->getKeys();
+            // std::cout<<"Does it even print this"<<"\n";
+            // for(int i =0; i < keys.size(); i++)
+            // {   StringView key = keys[i];
+            //     std::string value = tree.blackboard_stack[0]->getAny(std::string{key})->cast<std::string>();
+            //     std::cout<<key<<":"<<value<<"\n";
+            // }
+
+            // std::string output = i->cast<std::string>();
+            // std::cout<<output;
             
             // IMPORTANT: you must always add some sleep if you call tickRoot()
             // in a loop, to avoid using 100% of your CPU (busy loop).

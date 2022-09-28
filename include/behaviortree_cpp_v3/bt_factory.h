@@ -189,15 +189,26 @@ public:
 
     NodeStatus tickRoot()
     {
+
       if(!wake_up_)
       {
         initialize();
       }
 
+      //  auto keys = this->blackboard_stack[0]->getKeys();
+      //  std::cout<<"Does it even print this"<<"\n";
+      // for(int i =0; i < keys.size(); i++)
+      // {   StringView key = keys[i];
+      //     std::string value = this->blackboard_stack[0]->getAny(std::string{key})->cast<std::string>();
+      //     std::cout<<key<<":"<<value<<"\n";
+      // }
+
       if(!rootNode())
       {
         throw RuntimeError("Empty Tree");
       }
+      
+
       NodeStatus ret = rootNode()->executeTick();
       if( ret == NodeStatus::SUCCESS || ret == NodeStatus::FAILURE){
         rootNode()->setStatus(BT::NodeStatus::IDLE);
